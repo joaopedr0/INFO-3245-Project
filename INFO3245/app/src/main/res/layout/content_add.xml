@@ -15,7 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:ems="10"
-        android:hint="Title"
+        android:hint="@string/title"
         android:inputType="text"
         android:selectAllOnFocus="false"
         android:singleLine="true"

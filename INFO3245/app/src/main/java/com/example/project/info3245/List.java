@@ -1,11 +1,13 @@
 package com.example.project.info3245;
 
+import java.util.ArrayList;
+
 public class List {
 
     private String title;
-    private String [] items;
+    private ArrayList<String> items;
 
-    public void List(String title, String [] items){
+    public List(String title, ArrayList<String> items){
         this.title = title;
         this.items = items;
     }
@@ -18,11 +20,11 @@ public class List {
         this.title = title;
     }
 
-    public String[] getItems() {
+    public ArrayList<String>getItems() {
         return items;
     }
 
-    public void setItems(String[] items) {
+    public void setItems(ArrayList<String> items) {
         this.items = items;
     }
 }

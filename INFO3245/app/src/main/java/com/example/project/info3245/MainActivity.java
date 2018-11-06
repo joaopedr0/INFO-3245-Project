@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -18,8 +19,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<String> array;
-    ArrayAdapter adapter;
+    ArrayList<List> listArray;
+    private static CustomAdapter adapter;
+    private List clickedList;
+    private int clickedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +31,36 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        array = new ArrayList<String>();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, NewList.class);
+                intent.putExtra("ACTION", "ADD");
                 startActivityForResult(intent,1);
             }
         });
 
-        ListView listView = findViewById(R.id.listView);
-        adapter = new ArrayAdapter<String>(this, R.layout.listview_item, R.id.textView, array);
+        listArray = new ArrayList<List>();
+
+        final ListView listView = findViewById(R.id.listView);
+        adapter = new CustomAdapter(listArray , R.layout.listview_item, getApplicationContext());
         listView.setAdapter(adapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, NewList.class);
+                clickedList = listArray.get(position);
+                clickedPosition = position;
+                intent.putExtra("ACTION", "UPDATE");
+                intent.putExtra("TITLE", clickedList.getTitle());
+                intent.putExtra("ITEMS", clickedList.getItems());
+                startActivityForResult(intent,2);
+            }
+        });
     }
 
     @Override
@@ -51,8 +68,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                String item = data.getStringExtra("TITLE");
-                array.add(item);
+                String title = data.getStringExtra("TITLE");
+                ArrayList<String> items = data.getStringArrayListExtra("ITEMS");
+                List newList = new List(title, items);
+                listArray.add(newList);
+                adapter.notifyDataSetChanged();
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        } else if (requestCode == 2) {
+            if(resultCode == Activity.RESULT_OK){
+                String title = data.getStringExtra("TITLE");
+                ArrayList<String> items = data.getStringArrayListExtra("ITEMS");
+                clickedList.setTitle(title);
+                clickedList.setItems(items);
+                listArray.remove(clickedPosition);
+                listArray.add(clickedPosition, clickedList);
                 adapter.notifyDataSetChanged();
             }
             if (resultCode == Activity.RESULT_CANCELED) {

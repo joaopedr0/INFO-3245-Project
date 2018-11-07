@@ -56,28 +56,6 @@ public class NewList extends AppCompatActivity {
             button.setText(getString(R.string.update));
         }
 
-        final ListView listView = findViewById(R.id.listView2);
-        final ArrayAdapter adapter = new ArrayAdapter<String>(this, R.layout.to_do_list_item, R.id.textView3, array);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                array.remove(position);
-                adapter.notifyDataSetChanged();
-                return false;
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                array.add("yikes");
-                adapter.notifyDataSetChanged();
-            }
-        });
-
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,12 +63,9 @@ public class NewList extends AppCompatActivity {
                 String title;
                 EditText editText = findViewById(R.id.editText);
                 title = editText.getText().toString();
-                ArrayList<String> items = new ArrayList<>();
-                for (int i=0; i<adapter.getCount(); i++){
-                    items.add(adapter.getItem(i).toString());
-                }
+
                 returnIntent.putExtra("TITLE", title);
-                returnIntent.putExtra("ITEMS", items);
+
                 setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }

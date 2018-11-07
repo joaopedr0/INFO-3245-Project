@@ -1,6 +1,5 @@
 package com.example.project.info3245;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,16 +9,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends ArrayAdapter<List> {
+public class CustomAdapter extends ArrayAdapter<Task> {
 
     private int resourceLayout;
-    private ArrayList<List> list;
+    private ArrayList<Task> task;
     Context mContext;
 
-    public CustomAdapter(ArrayList<List> list, int resource, Context context) {
-        super(context, resource, list);
+    public CustomAdapter(ArrayList<Task> task, int resource, Context context) {
+        super(context, resource, task);
         this.resourceLayout = resource;
-        this.list = list;
+        this.task = task;
         this.mContext=context;
     }
 
@@ -34,18 +33,18 @@ public class CustomAdapter extends ArrayAdapter<List> {
             v = vi.inflate(resourceLayout, null);
         }
 
-        List list = getItem(position);
+        Task task = getItem(position);
 
-        if (list != null) {
+        if (task != null) {
             TextView textView = (TextView) v.findViewById(R.id.textView);
             TextView textView2 = (TextView) v.findViewById(R.id.textView2);
 
             if (textView != null) {
-                textView.setText(list.getTitle());
+                textView.setText(task.getTitle());
             }
 
-            if (textView2 != null) {
-                textView2.setText(list.getItems().get(0));
+            if (textView2 != null && task.getDate() != null) {
+                textView2.setText(task.getDateFormatted(task.getDate()));
             }
         }
 

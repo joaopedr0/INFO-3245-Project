@@ -4,24 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<List> listArray;
+    ArrayList<Task> taskArray;
     private static CustomAdapter adapter;
-    private List clickedList;
+    private Task clickedTask;
     private int clickedPosition;
 
     @Override
@@ -42,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        listArray = new ArrayList<List>();
+        taskArray = new ArrayList<Task>();
 
         final ListView listView = findViewById(R.id.listView);
-        adapter = new CustomAdapter(listArray , R.layout.listview_item, getApplicationContext());
+        adapter = new CustomAdapter(taskArray, R.layout.listview_item, getApplicationContext());
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -53,11 +54,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent();
                 intent.setClass(MainActivity.this, NewList.class);
-                clickedList = listArray.get(position);
+                clickedTask = taskArray.get(position);
                 clickedPosition = position;
                 intent.putExtra("ACTION", "UPDATE");
-                intent.putExtra("TITLE", clickedList.getTitle());
-                intent.putExtra("ITEMS", clickedList.getItems());
+                intent.putExtra("TITLE", clickedTask.getTitle());
+                intent.putExtra("DATE", clickedTask.getDate());
+                intent.putExtra("PRIORITY", clickedTask.getPriority());
                 startActivityForResult(intent,2);
             }
         });
@@ -69,9 +71,17 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 String title = data.getStringExtra("TITLE");
-                ArrayList<String> items = data.getStringArrayListExtra("ITEMS");
-                List newList = new List(title, items);
-                listArray.add(newList);
+//                SimpleDateFormat format = new SimpleDateFormat("M dd yyyy");
+//                Date date;
+//                try{
+//                    date = format.parse(data.getStringExtra("DATE"));
+//                } catch (ParseException e) {
+//                    date = null;
+//                }
+                int priority = data.getIntExtra("PRIORITY", 0);;
+                int color = data.getIntExtra("COLOR", 0);;
+                Task newTask = new Task(title, null, priority);
+                taskArray.add(newTask);
                 adapter.notifyDataSetChanged();
             }
             if (resultCode == Activity.RESULT_CANCELED) {
@@ -80,11 +90,20 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
                 String title = data.getStringExtra("TITLE");
-                ArrayList<String> items = data.getStringArrayListExtra("ITEMS");
-                clickedList.setTitle(title);
-                clickedList.setItems(items);
-                listArray.remove(clickedPosition);
-                listArray.add(clickedPosition, clickedList);
+                SimpleDateFormat format = new SimpleDateFormat("M dd yyyy");
+//                Date date;
+//                try{
+//                    date = format.parse(data.getStringExtra("DATE"));
+//                } catch (Exception e) {
+//                    date = null;
+//                }
+                int priority = data.getIntExtra("PRIORITY", 0);;
+                int color = data.getIntExtra("COLOR", 0);;
+                clickedTask.setTitle(title);
+                clickedTask.setDate(null);
+                clickedTask.setPriority(priority);
+                taskArray.remove(clickedPosition);
+                taskArray.add(clickedPosition, clickedTask);
                 adapter.notifyDataSetChanged();
             }
             if (resultCode == Activity.RESULT_CANCELED) {

@@ -4,4 +4,11 @@
     <string name="title">Title</string>
     <string name="add">ADD</string>
     <string name="update">UPDATE</string>
+    <string name="priority">Priority</string>
+    <string-array name="priorities">
+        <item>Priority 1</item>
+        <item>Priority 2</item>
+        <item>Priority 3</item>
+    </string-array>
+
 </resources>

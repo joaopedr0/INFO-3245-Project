@@ -10,5 +10,6 @@
         <item>Priority 2</item>
         <item>Priority 3</item>
     </string-array>
+    <string name="deadline">Deadline</string>
 
 </resources>

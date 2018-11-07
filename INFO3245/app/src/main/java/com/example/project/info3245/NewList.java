@@ -15,7 +15,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class NewList extends AppCompatActivity {
 
@@ -39,6 +42,9 @@ public class NewList extends AppCompatActivity {
 
         Button button = findViewById(R.id.button_add);
         array = new ArrayList<String>();
+        TextView deadline = findViewById(R.id.textView5);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        deadline.setText(dateFormat.format(Calendar.getInstance().getTime()));
 
         Intent data = getIntent();
         if(data.getStringExtra("ACTION").equals("UPDATE")) {

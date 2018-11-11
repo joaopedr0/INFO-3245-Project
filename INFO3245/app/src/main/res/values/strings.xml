@@ -11,5 +11,7 @@
         <item>Priority 3</item>
     </string-array>
     <string name="deadline">Deadline</string>
+    <string name="delete">Delete</string>
+    <string name="complete">Complete</string>
 
 </resources>

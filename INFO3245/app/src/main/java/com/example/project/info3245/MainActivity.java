@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
                 clickedPosition = position;
                 intent.putExtra("ACTION", "UPDATE");
                 intent.putExtra("TITLE", clickedTask.getTitle());
-                intent.putExtra("DATE", clickedTask.getDate());
+                SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy");
+                intent.putExtra("DATE", format.format(clickedTask.getDate()));
                 intent.putExtra("PRIORITY", clickedTask.getPriority());
                 startActivityForResult(intent,2);
             }
@@ -71,16 +72,15 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 String title = data.getStringExtra("TITLE");
-//                SimpleDateFormat format = new SimpleDateFormat("M dd yyyy");
-//                Date date;
-//                try{
-//                    date = format.parse(data.getStringExtra("DATE"));
-//                } catch (ParseException e) {
-//                    date = null;
-//                }
-                int priority = data.getIntExtra("PRIORITY", 0);;
-                int color = data.getIntExtra("COLOR", 0);;
-                Task newTask = new Task(title, null, priority);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                Date date;
+                try{
+                    date = format.parse(data.getStringExtra("DATE"));
+                } catch (ParseException e) {
+                    date = null;
+                }
+                int priority = data.getIntExtra("PRIORITY", 0);
+                Task newTask = new Task(title, date, priority);
                 taskArray.add(newTask);
                 adapter.notifyDataSetChanged();
             }
@@ -90,17 +90,16 @@ public class MainActivity extends AppCompatActivity {
         } else if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
                 String title = data.getStringExtra("TITLE");
-                SimpleDateFormat format = new SimpleDateFormat("M dd yyyy");
-//                Date date;
-//                try{
-//                    date = format.parse(data.getStringExtra("DATE"));
-//                } catch (Exception e) {
-//                    date = null;
-//                }
-                int priority = data.getIntExtra("PRIORITY", 0);;
-                int color = data.getIntExtra("COLOR", 0);;
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+                Date date;
+                try{
+                    date = format.parse(data.getStringExtra("DATE"));
+                } catch (Exception e) {
+                    date = null;
+                }
+                int priority = data.getIntExtra("PRIORITY", 0);
                 clickedTask.setTitle(title);
-                clickedTask.setDate(null);
+                clickedTask.setDate(date);
                 clickedTask.setPriority(priority);
                 taskArray.remove(clickedPosition);
                 taskArray.add(clickedPosition, clickedTask);

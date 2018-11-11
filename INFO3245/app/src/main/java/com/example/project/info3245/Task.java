@@ -52,7 +52,7 @@ public class Task {
     }
 
     public String getDateFormatted(Date date){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("M dd yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy");
         return dateFormat.format(date);
 
     }

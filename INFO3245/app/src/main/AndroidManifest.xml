@@ -22,6 +22,10 @@
             android:name=".NewList"
             android:parentActivityName=".MainActivity" />
         <activity android:name=".ProgressActivity" />
+        <activity
+            android:name=".TemplateSettingsActivity"
+            android:label="@string/title_activity_template_settings" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

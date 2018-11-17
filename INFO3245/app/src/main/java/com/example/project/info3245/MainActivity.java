@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_settings:
                 // open the settings activity
                 // startActivity(new Intent(MainActivity.this, SettingsActivity.class));
-                Toast.makeText(this, "you are gay", Toast.LENGTH_SHORT);
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                 return true;
             case R.id.task_progress:
                 // open the progress activity

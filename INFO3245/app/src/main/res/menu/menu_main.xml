@@ -4,7 +4,12 @@
     tools:context="com.example.project.info3245.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="1"
         android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/task_progress"
+        android:orderInCategory="2"
+        android:title="@string/task_progress"
         app:showAsAction="never" />
 </menu>

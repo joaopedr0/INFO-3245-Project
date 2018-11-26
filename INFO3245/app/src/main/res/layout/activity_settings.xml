@@ -25,46 +25,45 @@
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:layout_marginTop="64dp"
-        android:text="Deadline Notifications"
-        android:textSize="20sp"
         android:paddingLeft="20dp"
+        android:text="@string/deadline_notifications"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Switch
-        android:id="@+id/switchDeleteAllTasks"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginTop="4dp"
-        android:text="Delete all tasks"
-        android:textSize="20sp"
-        android:paddingLeft="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchNotifications" />
-
-    <Switch
-        android:id="@+id/switchResetTaskCounter"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_marginTop="4dp"
-        android:text="Reset Task Counter"
-        android:textSize="20sp"
-        android:paddingLeft="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchDeleteAllTasks" />
-
     <TextView
         android:id="@+id/textViewAbout"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:text="Toodoo v1.8"
         android:gravity="center"
+        android:text="@string/toodoo"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/delete_all_tests"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchNotifications" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/switchNotifications" />
 
 </android.support.constraint.ConstraintLayout>

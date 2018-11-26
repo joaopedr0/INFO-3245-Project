@@ -1,10 +1,15 @@
 package com.example.project.info3245;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,6 +25,13 @@ public class CustomAdapter extends ArrayAdapter<Task> {
         this.resourceLayout = resource;
         this.task = task;
         this.mContext=context;
+    }
+
+    @Override
+    public void notifyDataSetChanged()
+    {
+        super.notifyDataSetChanged();
+
     }
 
     @Override
@@ -41,10 +53,29 @@ public class CustomAdapter extends ArrayAdapter<Task> {
 
             if (textView != null) {
                 textView.setText(task.getTitle());
+                if(task.isComplete())
+                    textView.setTextColor(Color.parseColor("#A9A9A9"));
+                else
+                    textView.setTextColor(Color.parseColor("#000000"));
             }
 
             if (textView2 != null && task.getDate() != null) {
                 textView2.setText(task.getDateFormatted(task.getDate()));
+            }
+
+            LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearLayout);
+            int color;
+
+            switch (task.getPriority()){
+                case 0:
+                    layout.setBackground(v.getContext().getDrawable(R.drawable.border));
+                    break;
+                case 1:
+                    layout.setBackground(v.getContext().getDrawable(R.drawable.border_yellow));
+                    break;
+                case 2:
+                    layout.setBackground(v.getContext().getDrawable(R.drawable.border_red));
+                    break;
             }
         }
 

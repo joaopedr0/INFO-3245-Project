@@ -34,7 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + NOTIFICATIONS + " TEXT NOT NULL);";
 
     private static final String ADD_NOTIFICATION = "insert into " + TABLE_PREFERENCES +
-            "VALUES ('YES');";
+            " VALUES ('YES');";
 
     public DatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);

@@ -46,7 +46,7 @@ public class NewList extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(getDrawable(R.drawable.baseline_arrow_back_white_18dp));
+        toolbar.setNavigationIcon(getDrawable(R.drawable.baseline_arrow_back_white_18dp));  // back button
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +56,7 @@ public class NewList extends AppCompatActivity {
             }
         });
 
-        Button button = findViewById(R.id.button_add);
+        Button buttonUpdate = findViewById(R.id.button_add);
 
         Button button_delete = findViewById(R.id.button);
         Button button_complete = findViewById(R.id.button2);
@@ -80,7 +80,7 @@ public class NewList extends AppCompatActivity {
             }
 
         };
-        deadline.setOnClickListener(new View.OnClickListener() {
+        deadline.setOnClickListener(new View.OnClickListener() {    // opens DatePicker control
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(NewList.this, datePicker, calendar
@@ -115,7 +115,7 @@ public class NewList extends AppCompatActivity {
             Spinner spinner = findViewById(R.id.spinner);
             spinner.setSelection(priority);
 
-            button.setText(getString(R.string.update));
+            buttonUpdate.setText(getString(R.string.update));
 
             button_delete.setVisibility(View.VISIBLE);
 
@@ -145,7 +145,7 @@ public class NewList extends AppCompatActivity {
                         if (days == 1)
                             message = "This task is due tomorrow!";
                         else
-                            message = "This task is due " + days + " days.";
+                            message = "This task is due in " + days + " days.";
                         toast.setText(message);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
@@ -163,7 +163,7 @@ public class NewList extends AppCompatActivity {
             }
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
+        buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();

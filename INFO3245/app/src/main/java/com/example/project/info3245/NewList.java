@@ -56,16 +56,21 @@ public class NewList extends AppCompatActivity {
             }
         });
 
-        Button buttonUpdate = findViewById(R.id.button_add);
-
+        // buttons refs
+        Button button_update = findViewById(R.id.button_add);
         Button button_delete = findViewById(R.id.button);
         Button button_complete = findViewById(R.id.button2);
 
+        // setting global variables
         array = new ArrayList<String>();
         deadline = findViewById(R.id.textView5);
         dateFormat = new SimpleDateFormat("MMM dd, yyyy");
         calendar = Calendar.getInstance();
+
+        // setting textview as the current date
         deadline.setText(dateFormat.format(calendar.getTime()));
+
+        // creating the datepicker
         datePicker = new DatePickerDialog.OnDateSetListener() {
 
             @Override
@@ -80,6 +85,8 @@ public class NewList extends AppCompatActivity {
             }
 
         };
+
+        // textview event handler
         deadline.setOnClickListener(new View.OnClickListener() {    // opens DatePicker control
             @Override
             public void onClick(View v) {
@@ -90,6 +97,7 @@ public class NewList extends AppCompatActivity {
         });
 
         Intent data = getIntent();
+        // if the action is to update, set title, date and priority
         if(data.getStringExtra("ACTION").equals("UPDATE")) {
             String title = data.getStringExtra("TITLE");
             String dateString = data.getStringExtra("DATE");
@@ -115,10 +123,12 @@ public class NewList extends AppCompatActivity {
             Spinner spinner = findViewById(R.id.spinner);
             spinner.setSelection(priority);
 
-            buttonUpdate.setText(getString(R.string.update));
+            // change the text of the toolbar button
+            button_update.setText(getString(R.string.update));
 
             button_delete.setVisibility(View.VISIBLE);
 
+            // if task is not completed and notifications are on, show toasts
             boolean completed = data.getBooleanExtra("COMPLETED", false);
             if(!completed) {
                 button_complete.setVisibility(View.VISIBLE);
@@ -163,7 +173,8 @@ public class NewList extends AppCompatActivity {
             }
         }
 
-        buttonUpdate.setOnClickListener(new View.OnClickListener() {
+        // update button event handler
+        button_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
@@ -184,6 +195,7 @@ public class NewList extends AppCompatActivity {
             }
         });
 
+        // creating dialog for delete confirmation
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -201,6 +213,7 @@ public class NewList extends AppCompatActivity {
             }
         };
 
+        // event handler for delete button
         button_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -210,7 +223,7 @@ public class NewList extends AppCompatActivity {
             }
         });
 
-
+        // event handler for complete button
         button_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

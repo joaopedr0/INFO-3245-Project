@@ -51,30 +51,33 @@ public class CustomAdapter extends ArrayAdapter<Task> {
             TextView textView = (TextView) v.findViewById(R.id.textView);
             TextView textView2 = (TextView) v.findViewById(R.id.textView2);
 
+            // set the first textview as the title of the task
             if (textView != null) {
                 textView.setText(task.getTitle());
+                // if the task is completed, change the color of the title to gray
                 if(task.isComplete())
                     textView.setTextColor(Color.parseColor("#A9A9A9"));
                 else
                     textView.setTextColor(Color.parseColor("#000000"));
             }
 
+            // set the second textview as the deadline
             if (textView2 != null && task.getDate() != null) {
                 textView2.setText(task.getDateFormatted(task.getDate()));
             }
 
             LinearLayout layout = (LinearLayout) v.findViewById(R.id.linearLayout);
-            int color;
 
+            // change the color of the task based on the priority
             switch (task.getPriority()){
                 case 0:
-                    layout.setBackground(v.getContext().getDrawable(R.drawable.border));
+                    layout.setBackground(v.getContext().getDrawable(R.drawable.border_red));
                     break;
                 case 1:
                     layout.setBackground(v.getContext().getDrawable(R.drawable.border_yellow));
                     break;
                 case 2:
-                    layout.setBackground(v.getContext().getDrawable(R.drawable.border_red));
+                    layout.setBackground(v.getContext().getDrawable(R.drawable.border));
                     break;
             }
         }

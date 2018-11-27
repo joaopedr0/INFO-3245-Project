@@ -39,9 +39,12 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // open the database
         dbManager = new DBManager(this);
         dbManager.open();
         Cursor cursorNotifications = dbManager.fetchNotificationPreference();
+
+        //check if user has notifications on or off
         boolean notifications = false;
         if(cursorNotifications.getString(cursorNotifications.getColumnIndex("NOTIFICATIONS")).equals("YES"))
             notifications = true;
@@ -51,6 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         if(notifications)
             switchNotifications.toggle();
 
+        // button ref
         Button buttonDeleteAllTasks = findViewById(R.id.button3);
 
         // switch event handler
@@ -67,6 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        // creating the dialog for deleting all tasks
         final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -89,6 +94,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         };
 
+        // event handler for the delete all tasks button
         buttonDeleteAllTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

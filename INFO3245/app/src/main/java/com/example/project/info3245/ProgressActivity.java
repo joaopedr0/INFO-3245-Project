@@ -38,11 +38,13 @@ public class ProgressActivity extends AppCompatActivity {
             }
         });
 
+        // opening the database and retrieving all tasks
         SQLiteDatabase.loadLibs(this);
         dbManager = new DBManager(this);
         dbManager.open();
         Cursor cursor = dbManager.fetch();
 
+        // counts total tasks and completed tasks
         if(cursor.moveToFirst()){
             do {
                 if(cursor.getString(cursor.getColumnIndex("COMPLETED")).equals("YES"))
@@ -51,6 +53,7 @@ public class ProgressActivity extends AppCompatActivity {
             }while(cursor.moveToNext());
         }
 
+        // updates counter
         TextView taskCounter = findViewById(R.id.textViewTaskCounter);
         taskCounter.setText(String.valueOf(completed) + "/" + String.valueOf(total));
 

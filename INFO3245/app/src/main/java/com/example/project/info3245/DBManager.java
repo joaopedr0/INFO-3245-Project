@@ -52,7 +52,7 @@ public class DBManager {
     public Cursor fetchByPriority() {
         String[] columns = new String[] { DatabaseHelper.ID, DatabaseHelper.TITLE, DatabaseHelper.DATE,
                 DatabaseHelper.PRIORITY, DatabaseHelper.COMPLETED};
-        Cursor cursor = database.query(DatabaseHelper.TABLE_TASKS, columns, null, null, null, null, "priority DESC");
+        Cursor cursor = database.query(DatabaseHelper.TABLE_TASKS, columns, null, null, null, null, "priority ASC");
         if (cursor != null) {
             cursor.moveToFirst();
         }

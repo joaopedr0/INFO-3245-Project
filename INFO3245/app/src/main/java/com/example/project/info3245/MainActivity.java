@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // loading libraries for the database
         SQLiteDatabase.loadLibs(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // open the database and retrieve all tasks
         dbManager = new DBManager(this);
         dbManager.open();
         final Cursor cursor = dbManager.fetchByPriority();
@@ -67,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         taskArray = new ArrayList<Task>();
         SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy");
 
+        // convert cursor to Task objects
         if(cursor.moveToFirst()){
             do {
                 Date date;
@@ -86,16 +89,19 @@ public class MainActivity extends AppCompatActivity {
             }while(cursor.moveToNext());
         }
 
+        // sorting tasks by priority
         Collections.sort(taskArray, new Comparator<Task>() {
             @Override public int compare(Task t1, Task t2) {
-                return t2.getPriority()- t1.getPriority();
+                return t1.getPriority()- t2.getPriority();
             }
         });
 
+        // populating listview with the tasks array
         final ListView listView = findViewById(R.id.listView);
         adapter = new CustomAdapter(taskArray, R.layout.listview_item, getApplicationContext());
         listView.setAdapter(adapter);
 
+        // event handler for clicking a listview item
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -121,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        // fetch and re-order tasks
         super.onResume();
         taskArray.clear();
         SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy");
@@ -151,8 +158,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        // request code 1 means adding a new Task
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
+                // converting extras into a Task object
                 String title = data.getStringExtra("TITLE");
                 SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy");
                 Date date;
@@ -170,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 taskArray.add(newTask);
                 Collections.sort(taskArray, new Comparator<Task>() {
                     @Override public int compare(Task t1, Task t2) {
-                        return t2.getPriority()- t1.getPriority();
+                        return t1.getPriority()- t2.getPriority();
                     }
                 });
                 adapter.notifyDataSetChanged();
@@ -178,8 +187,10 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_CANCELED) {
                 //Write your code if there's no result
             }
+        // request code 2 means updating or deleting a task
         } else if (requestCode == 2) {
             if(resultCode == Activity.RESULT_OK){
+                // converting extras into a Task object
                 String title = data.getStringExtra("TITLE");
                 SimpleDateFormat format = new SimpleDateFormat("MMM dd yyyy");
                 Date date;
@@ -201,11 +212,12 @@ public class MainActivity extends AppCompatActivity {
                 taskArray.add(clickedPosition, clickedTask);
                 Collections.sort(taskArray, new Comparator<Task>() {
                     @Override public int compare(Task t1, Task t2) {
-                        return t2.getPriority()- t1.getPriority();
+                        return t1.getPriority()- t2.getPriority();
                     }
                 });
                 adapter.notifyDataSetChanged();
             }
+            // deleting a task
             if (resultCode == DELETE) {
                 dbManager.delete(clickedTask.getId());
                 taskArray.remove(clickedPosition);
